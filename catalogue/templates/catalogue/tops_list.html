@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Top List</title>
+    </head>
+    <body>
+        <h1>My Tops</h1>
+
+        <a href="{% url 'top_upload' %}">Upload new top</a>
+
+        <ul>
+            {% for top in tops %}
+            <li>
+                <strong>{{ top.name }}</strong><br>
+                Color: {{ top.color }}<br>
+                <img src="{{ top.image.url }}" alt="{{ top.name }}" style="height: 100px;">
+            </li>
+            {% empty %}
+            <li>No tops yet.</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
