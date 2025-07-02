@@ -20,3 +20,8 @@ db.sqlite3
 # OS files
 .DS_Store
 Thumbs.db
+
+# Media uploads
+**clothes/**
+**earring/**
+**media/**

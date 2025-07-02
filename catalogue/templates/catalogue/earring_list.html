@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Earring List</title>
+    </head>
+    <body>
+        <h1>My Earrings</h1>
+
+        <a href="{% url 'earring_upload' %}">Upload new earring</a>
+
+        <ul>
+            {% for earring in earrings %}
+            <li>
+                <strong>{{ earring.name }}</strong><br>
+                Color: {{ earring.color }}<br>
+                <img src="{{ earring.image.url }}" alt="{{ earring.name }}" style="height: 100px;">
+            </li>
+            {% empty %}
+            <li>No earrings yet.</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
