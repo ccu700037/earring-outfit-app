@@ -11,5 +11,9 @@ urlpatterns = [
     path('bottoms/', views.bottoms_list, name='bottoms_list'),
     path('bottoms/upload/', views.bottom_upload, name='bottom_upload'),
     
+    path('outfits/', views.outfits_list, name='outfits_list'),
+    path('outfits/create/', views.outfit_selection, name='outfit_selection'),
+    path('outfits/<int:outfit_id/', views.outfit_detail, name='outfit_detail'),
+    
     path('', views.home, name='home')
 ]

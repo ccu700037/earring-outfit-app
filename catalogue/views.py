@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Earring, Top, Bottom
-from .forms import EarringForm, TopForm, BottomForm
+from .models import Earring, Top, Bottom, Outfit, suggest_earrings
+from .forms import EarringForm, TopForm, BottomForm, OutfitForm
 
 def earrings_list(request):
     earrings = Earring.objects.all()
@@ -43,6 +43,25 @@ def bottom_upload(request):
     else:
         form = BottomForm()
     return render(request, "catalogue/bottom_upload.html", {"form": form})
+
+def outfits_list(request):
+    outfits = Outfit.objects.select_related("top", "bottom").order_by("-created")
+    return render(request, "catalogue/outfits_list.html", {"outfits": outfits})
+
+def outfit_selection(request):
+    if request.method == "POST":
+        form = OutfitForm(request.POST)
+        if form.is_valid():
+            outfit = form.save()
+            return redirect("outfit_detail", outfit_id=outfit.id)
+    else:
+        form = OutfitForm()
+    return render(request, "catalogue/outfit_selection.html", {"form": form})
+
+def outfit_detail(request, outfit_id):
+    outfit = get_object_or_404(Outfit, id=outfit_id)
+    suggested_earrings = suggest_earrings(outfit)
+    return render(request, "catalogue/outfit_detail.html", {"outfit": outfit, "suggested": suggested})
 
 def home(request):
     return render(request, "catalogue/home.html")
