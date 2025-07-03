@@ -1,18 +1,8 @@
-{% extends "base.html" %}
-{% block title %}Earrings{% endblock title %}
-{% block content %}
-<h1 class="text-2xl font-semibold mb-4">Earrings</h1>
-<a class="btn" href="{% url 'earring_upload' %}">Upload New Earring</a>
+{% extends "base_list.html" %}
+{% block title %}Earrings{% endblock %}
 
-<div class="grid gap-6">
-    {% for earring in earrings %}
-    <div class="border border-pink-200 rounded-2x1 shadow p-4 bg-white">
-        <img class="mx-auto object-contain" src="{{ earring.image.url }}" alt="{{ earring.name }}">
-        <h2 class="text-lg font-semibold text-pink-700 text-center">{{ earring.name }}</h2>
-        <div class="text-sm text-gray-600 text-center">{{ earring.color }}</div>
-    </div>
-    {% empty %}
-    <p>No earrings yet.</p>
-    {% endfor %}
-</div>
+{% block content %}
+{% with title="Earrings" singular="Earring" upload_url="earring_upload" delete_url="earring_delete" items=earrings %}
+    {{ block.super }}
+{% endwith %}
 {% endblock %}

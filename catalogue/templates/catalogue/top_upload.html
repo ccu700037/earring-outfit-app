@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Upload Top</title>
-    </head>
-    <body>
-        <h1>Upload new top</h1>
+{% extends "base_upload.html" %}
 
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Upload</button>
-        </form>
-
-        <a href="{% url 'tops_list' %}">Back to list</a>
-    </body>
-</html>
+{% block content %}
+    {% with item_name="Top" return_url_name="tops_list" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

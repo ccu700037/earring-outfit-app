@@ -1,5 +1,5 @@
 from django.db import models
-from PIL import Image
+from PIL import Image, ImageOps
 from collections import Counter
 import colorsys
 import numpy as np
@@ -92,14 +92,23 @@ def hue_to_name(hue_deg: float) -> str:
     
 def extract_dominant_color(path, sat=0.25, val=0.8):
     # ignores desaturated background pixels
-    img = Image.open(path).convert("RGB").resize((160, 160))
+    img = ImageOps.exif_transpose(Image.open(path)).convert("RGB").resize((160, 160))
     img = img.crop((32, 32, 128, 128))
     arr = np.asarray(img) / 255.0 # divide by 255 to normalize. arr is (160, 160, 3)
     r, g, b = arr[..., 0], arr[..., 1], arr[..., 2] # ... notation is all preceding axes in numpy
     
     h, s, v = np.vectorize(colorsys.rgb_to_hsv)(r, g, b)
     global_sat = s.mean()
-    if global_sat < 0.07 and v.mean() > 0.5:
+    global_val = v.mean()
+
+    dark_ratio = np.mean(v < 0.20)
+    if dark_ratio > 0.25:
+        return "black"
+
+    if global_val > 0.90 and global_sat < 0.15:
+        return "white"
+
+    if global_sat < 0.20 and 0.30 < global_val < 0.85:
         return "gray"
     
     # mask out sat too low or brightness too high
@@ -143,7 +152,7 @@ EARRING_PALETTE = {
     "red":    ["yellow", "white", "black", "red"],
     "orange": ["yellow", "blue", "orange"],
     "yellow": ["purple", "white", "brown", "yellow"],
-    "green":  ["green", "gold", "pink"],
+    "green":  ["green", "yellow", "pink"],
     "blue":   ["blue", "gray", "white", "yellow", "cyan"],
     "purple": ["yellow", "purple"],
     "pink":   ["gray", "white", "pink", "yellow"],

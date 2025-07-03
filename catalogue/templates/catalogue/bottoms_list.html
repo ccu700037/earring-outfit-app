@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Bottom List</title>
-    </head>
-    <body>
-        <h1>My Bottoms</h1>
+{% extends "base_list.html" %}
+{% block title %}Bottoms{% endblock %}
 
-        <a href="{% url 'bottom_upload' %}">Upload new bottom</a>
-
-        <ul>
-            {% for bottom in bottoms %}
-            <li>
-                <strong>{{ bottom.name }}</strong><br>
-                Color: {{ bottom.color }}<br>
-                <img src="{{ bottom.image.url }}" alt="{{ bottom.name }}" style="height: 100px;">
-            </li>
-            {% empty %}
-            <li>No bottoms yet.</li>
-            {% endfor %}
-        </ul>
-    </body>
-</html>
+{% block content %}
+{% with title="Bottoms" singular="Bottom" upload_url="bottom_upload" delete_url="bottom_delete" items=bottoms %}
+    {{ block.super }}
+{% endwith %}
+{% endblock %}

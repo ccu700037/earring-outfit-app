@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Outfit Details{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 mt-8 text-center">
+
+    <!-- page title -->
+    <h1 class="text-3xl font-semibold text-pink-700 mb-8">Outfit Details</h1>
+
+    <!-- outfit & earrings side-by-side on medium, stacked on mobile -->
+    <div class="flex flex-col md:flex-row gap-8">
+
+        <!-- outfit card -->
+        <div class="flex-1 border border-pink-200 rounded-lg shadow p-4 bg-white">
+            <h2 class="text-lg font-semibold text-pink-700 mb-4">Top: {{ outfit.top.name }}</h2>
+            <div class="h-64 w-full overflow-hidden rounded-md bg-gray-100 mb-6">
+                <img src="{{ outfit.top.image.url }}" alt="{{ outfit.top.name }}" class="h-full w-full object-cover">
+            </div>
+
+            <h2 class="text-lg font-semibold text-pink-700 mb-4">Bottom: {{ outfit.bottom.name }}</h2>
+            <div class="h-64 w-full overflow-hidden rounded-md bg-gray-100">
+                <img src="{{ outfit.bottom.image.url }}" alt="{{ outfit.bottom.name }}" class="h-full w-full object-cover">
+            </div>
+        </div>
+
+        <!-- suggested earrings -->
+        <div class="flex-1">
+            <h2 class="text-lg font-semibold text-pink-700 mb-4">Suggested Earrings</h2>
+
+            {% if suggested %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {% for earring in suggested %}
+                <div class="border border-pink-200 rounded-lg shadow p-4 bg-white text-center">
+                    <div class="h-40 w-full overflow-hidden rounded-md bg-gray-100 mb-2">
+                        <img src="{{ earring.image.url }}" alt="{{ earring.name }}" class="h-full w-full object-cover">
+                    </div>
+                    <p class="font-semibold text-pink-600">{{ earring.name }}</p>
+                    <p class="text-sm text-gray-600">{{ earring.color }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-gray-600 italic">No earrings suggestions available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-10">
+        <a href="{% url 'outfits_list' %}" class="text-pink-500 hover:underline text-sm">
+            &larr; Back to outfits
+        </a>
+    </div>
+</div>
+{% endblock %}

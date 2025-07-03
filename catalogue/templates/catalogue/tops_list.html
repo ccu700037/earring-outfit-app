@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Top List</title>
-    </head>
-    <body>
-        <h1>My Tops</h1>
+{% extends "base_list.html" %}
+{% block title %}Tops{% endblock %}
 
-        <a href="{% url 'top_upload' %}">Upload new top</a>
-
-        <ul>
-            {% for top in tops %}
-            <li>
-                <strong>{{ top.name }}</strong><br>
-                Color: {{ top.color }}<br>
-                <img src="{{ top.image.url }}" alt="{{ top.name }}" style="height: 100px;">
-            </li>
-            {% empty %}
-            <li>No tops yet.</li>
-            {% endfor %}
-        </ul>
-    </body>
-</html>
+{% block content %}
+{% with title="Tops" singular="Top" upload_url="top_upload" delete_url="top_delete" items=tops %}
+    {{ block.super }}
+{% endwith %}
+{% endblock %}

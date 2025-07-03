@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Upload Bottoms</title>
-    </head>
-    <body>
-        <h1>Upload new bottom</h1>
+{% extends "base_upload.html" %}
 
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Upload</button>
-        </form>
-
-        <a href="{% url 'bottoms_list' %}">Back to list</a>
-    </body>
-</html>
+{% block content %}
+    {% with item_name="Bottoms" return_url_name="bottoms_list" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
