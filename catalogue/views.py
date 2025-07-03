@@ -3,7 +3,7 @@ from .models import Earring, Top, Bottom, Outfit, suggest_earrings
 from .forms import EarringForm, TopForm, BottomForm, OutfitForm
 
 def earrings_list(request):
-    earrings = Earring.objects.all()
+    earrings = Earring.objects.order_by("color", "name")
     return render(request, "catalogue/earrings_list.html", {"earrings": earrings})
 
 def earring_upload(request):
@@ -17,7 +17,7 @@ def earring_upload(request):
     return render(request, "catalogue/earring_upload.html", {"form": form})
 
 def tops_list(request):
-    tops = Top.objects.all()
+    tops = Top.objects.order_by("color", "name")
     return render(request, "catalogue/tops_list.html", {"tops": tops})
 
 def top_upload(request):
@@ -31,7 +31,7 @@ def top_upload(request):
     return render(request, "catalogue/top_upload.html", {"form": form})
 
 def bottoms_list(request):
-    bottoms = Bottom.objects.all()
+    bottoms = Bottom.objects.order_by("color", "name")
     return render(request, "catalogue/bottoms_list.html", {"bottoms": bottoms})
 
 def bottom_upload(request):

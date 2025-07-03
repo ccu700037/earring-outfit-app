@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Adorned{% endblock title %}</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        {% block extra_head %}{% endblock %}
+    </head>
+    <body class="bg-pink-50 text-gray-800 min-h-screen flex flex-row">
+
+        <!-- Navbar -->
+        <nav class="sticky bg-white shadow border-b-2 border-pink-200">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex gap-6 font-medium">
+                <a class="hover:text-pink-600" href="{% url 'home' %}">Home</a>
+                <a class="hover:text-pink-600" href="{% url 'top_list' %}">Tops</a>
+                <a class="hover:text-pink-600" href="{% url 'bottom_list' %}">Bottoms</a>
+                <a class="hover:text-pink-600" href="{% url 'earring_list' %}">Earrings</a>
+                <a class="hover:text-pink-600" href="{% url 'outfit_list' %}">Create Outfit</a>
+            </div>
+        </nav>
+
+        <main class="flex-1 max-w-6xl mx-auto px-4">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="bg-white shadow py-4 mt-10 text-center text-sm text-gray-500">
+            &copy; {{ year|default:2025 }} Adorned
+        </footer>
+    </body>
+</html>
